@@ -4,11 +4,14 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public final class Defer {
 	private static final ThreadLocal<Deque<List<Runnable>>> contexts = ThreadLocal.withInitial(LinkedList::new);
 
 	public static void tryWithDefer(Runnable block) {
+		Objects.requireNonNull(block);
+
 		Deque<List<Runnable>> context = contexts.get();
 
 		LinkedList<Runnable> scope = new LinkedList<>();
@@ -27,6 +30,8 @@ public final class Defer {
 	}
 
 	public static void defer(Runnable releaser) {
+		Objects.requireNonNull(releaser);
+
 		Deque<List<Runnable>> context = contexts.get();
 
 		if (context.isEmpty()) {

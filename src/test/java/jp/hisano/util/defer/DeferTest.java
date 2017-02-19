@@ -40,4 +40,20 @@ public class DeferTest extends TestCase {
 		assertEquals("use", messages.poll());
 		assertEquals("dispose", messages.poll());
 	}
+
+	public void testNullCheck() {
+		try {
+			tryWithDefer(null);
+			fail();
+		} catch (NullPointerException e) {
+		}
+
+		try {
+			tryWithDefer(() -> {
+				defer(null);
+			});
+			fail();
+		} catch (NullPointerException e) {
+		}
+	}
 }

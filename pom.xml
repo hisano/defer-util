@@ -10,7 +10,7 @@
 
 	<groupId>jp.hisano.util</groupId>
 	<artifactId>defer-util</artifactId>
-	<version>0.9.0</version>
+	<version>1.0.0</version>
 	<name>defer keyword in Java</name>
 	<url>http://github.com/hisano/defer-util/</url>
 

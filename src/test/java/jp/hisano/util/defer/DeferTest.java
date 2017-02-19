@@ -56,4 +56,12 @@ public class DeferTest extends TestCase {
 		} catch (NullPointerException e) {
 		}
 	}
+
+	public void testStateCheck() {
+		try {
+			defer(() -> {});
+			fail();
+		} catch (IllegalStateException e) {
+		}
+	}
 }

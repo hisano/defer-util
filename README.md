@@ -1,14 +1,14 @@
 # defer-util
 
-*defer keyword in Java like Swift and Go
+*defer block in Java like Swift and Go*
 
 ## Introduction
 
-defer-util is a defer library for releasing resources.
+defer-util is a defer block library for releasing resources.
 
 ## Usage
 
-Use `defer` keyword to release resources after `tryWithDefer` block end
+Use `defer` block to release resources after `tryWithDefer` block end.
 
 ```java
 import static jp.hisano.util.defer.Defer.*;

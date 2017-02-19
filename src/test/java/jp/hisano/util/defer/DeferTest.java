@@ -3,6 +3,7 @@ package jp.hisano.util.defer;
 import static jp.hisano.util.defer.Defer.defer;
 import static jp.hisano.util.defer.Defer.tryWithDefer;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -62,6 +63,26 @@ public class DeferTest extends TestCase {
 			defer(() -> {});
 			fail();
 		} catch (IllegalStateException e) {
+		}
+	}
+
+	public void testCheckedException() {
+		try {
+			tryWithDefer(() -> {
+				throw new IOException();
+			});
+			fail();
+		} catch (DeferException e) {
+		}
+
+		try {
+			tryWithDefer(() -> {
+				defer(() -> {
+					throw new IOException();
+				});
+			});
+			fail();
+		} catch (DeferException e) {
 		}
 	}
 }

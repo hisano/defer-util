@@ -3,14 +3,17 @@ package jp.hisano.util.defer;
 import static jp.hisano.util.defer.Defer.defer;
 import static jp.hisano.util.defer.Defer.tryWithDefer;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class DeferTest extends TestCase {
-	public void testDefer() {
+class DeferTest {
+	@Test
+	void deferMethod() {
 		Queue<String> messages = new LinkedList<>();
 
 		tryWithDefer(() -> {
@@ -22,7 +25,8 @@ public class DeferTest extends TestCase {
 		assertEquals("dispose", messages.poll());
 	}
 
-	public void testEnclosedDefer() {
+	@Test
+	void enclosedDefer() {
 		Queue<String> messages = new LinkedList<>();
 
 		tryWithDefer(() -> {
@@ -42,47 +46,36 @@ public class DeferTest extends TestCase {
 		assertEquals("dispose", messages.poll());
 	}
 
-	public void testNullCheck() {
-		try {
-			tryWithDefer(null);
-			fail();
-		} catch (NullPointerException e) {
-		}
+	@Test
+	void nullCheck() {
+		assertThrows(NullPointerException.class, () -> tryWithDefer(null));
 
-		try {
+		assertThrows(NullPointerException.class, () -> {
 			tryWithDefer(() -> {
 				defer(null);
 			});
-			fail();
-		} catch (NullPointerException e) {
-		}
+		});
 	}
 
-	public void testStateCheck() {
-		try {
-			defer(() -> {});
-			fail();
-		} catch (IllegalStateException e) {
-		}
+	@Test
+	void stateCheck() {
+		assertThrows(IllegalStateException.class, () -> defer(() -> {}));
 	}
 
-	public void testCheckedException() {
-		try {
+	@Test
+	void checkedException() {
+		assertThrows(DeferException.class, () -> {
 			tryWithDefer(() -> {
 				throw new IOException();
 			});
-			fail();
-		} catch (DeferException e) {
-		}
+		});
 
-		try {
+		assertThrows(DeferException.class, () -> {
 			tryWithDefer(() -> {
 				defer(() -> {
 					throw new IOException();
 				});
 			});
-			fail();
-		} catch (DeferException e) {
-		}
+		});
 	}
 }

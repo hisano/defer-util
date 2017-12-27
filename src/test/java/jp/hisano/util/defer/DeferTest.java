@@ -3,6 +3,7 @@ package jp.hisano.util.defer;
 import static jp.hisano.util.defer.Defer.defer;
 import static jp.hisano.util.defer.Defer.tryWithDefer;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
@@ -21,8 +22,7 @@ class DeferTest {
 			messages.add("use");
 		});
 
-		assertEquals("use", messages.poll());
-		assertEquals("dispose", messages.poll());
+		assertThat(messages).containsSequence("use", "dispose");
 	}
 
 	@Test
@@ -40,10 +40,7 @@ class DeferTest {
 			messages.add("use");
 		});
 
-		assertEquals("enclosedUse", messages.poll());
-		assertEquals("enclosedDispose", messages.poll());
-		assertEquals("use", messages.poll());
-		assertEquals("dispose", messages.poll());
+		assertThat(messages).containsSequence("enclosedUse", "enclosedDispose", "use", "dispose");
 	}
 
 	@Test

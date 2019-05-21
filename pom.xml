@@ -99,6 +99,9 @@
 						<version>${junit.platform.version}</version>
 					</dependency>
 				</dependencies>
+				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
